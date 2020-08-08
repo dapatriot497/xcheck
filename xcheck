@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+from sys import argv 
+import subprocess as sp
+
+script, tool = argv
+
+def manager(): 
+	print("This prints ttys001!")
+	first_cmd = ['ps', '-a']
+	second_cmd =['awk','/ttys001/ NR>1 {print $2}']
+	third_cmd = ['uniq','-c']
+	pr1 = sp.Popen(first_cmd, stdout=sp.PIPE)
+	pr2 = sp.Popen(second_cmd, stdin=pr1.stdout, stdout=sp.PIPE)
+	pr3 = sp.Popen(third_cmd, stdin=pr2.stdout)
+
+def clerk(): 
+	print("This prints ttys002!")
+	first_cmd = ['ps', '-a']
+	second_cmd =['awk','/ttys002/ NR>1 {print $2}']
+	third_cmd = ['uniq','-c']
+	pr1 = sp.Popen(first_cmd, stdout=sp.PIPE)
+	pr2 = sp.Popen(second_cmd, stdin=pr1.stdout, stdout=sp.PIPE)
+	pr3 = sp.Popen(third_cmd, stdin=pr2.stdout)
+
+if tool == "manager":
+	manager()
+elif tool == "clerk":
+	clerk()
+else: 
+	print("Wrong Input!")	
+	print("Input Format is: xcheck [Option]")	
+	print("Option 1: verdi")
+	print("Option 2: vcs")
+	
+	
